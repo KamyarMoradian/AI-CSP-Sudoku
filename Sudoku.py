@@ -3,6 +3,7 @@ class Sudoku:
         self.board = []
         self.dim = dim
         self.expanded_nodes = 0
+        self.rv = 0
         self.initialize_board(file_dir)
 
     def initialize_board(self, file_dir):
@@ -69,3 +70,45 @@ class Sudoku:
                         return True
                     self.board[next_location[0]][next_location[1]] = '0'
         return False
+
+    def solve_mvr_back_tracking_util(self):
+        # TODO: Complete method
+        pass
+
+    def solve_mvr_back_tracking(self):
+        self.rv = self.get_remaining_values()
+        return self.solve_mvr_back_tracking_util()
+
+    def get_domain(self, row, col):
+        # 0. initialize array candidates and populate it with values in range 1 to dim (which is 9 in this scenario)
+        candidates = [str(i) for i in range(1, self.dim + 1)]
+        # 1. remove occurred values in row
+        for i in range(self.dim):
+            if self.board[row][i] != '0':
+                if self.board[row][i] in candidates:
+                    candidates.remove(self.board[row][i])
+        # 2. remove occurred values in column
+        for i in range(self.dim):
+            if self.board[i][col] != '0':
+                if self.board[i][col] in candidates:
+                    candidates.remove(self.board[i][col])
+        # 3. remove occurred values in region
+        row_region = row - row % 3
+        col_region = col - col % 3
+        for i in range(row_region, row_region + 3):
+            for j in range(col_region, col_region + 3):
+                if self.board[i][j] != 0:
+                    if self.board[i][j] in candidates:
+                        candidates.remove(self.board[i][j])
+        # 4. return all available values for board[row][col]
+        return candidates
+
+    def get_remaining_values(self):
+        new_rv = []
+        for row in range(self.dim):
+            for col in range(self.dim):
+                if self.board[row][col] != '0':
+                    new_rv.append(['x'])
+                else:
+                    new_rv.append(self.get_domain(row, col))
+        return new_rv
