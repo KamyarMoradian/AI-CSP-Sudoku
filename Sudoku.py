@@ -57,8 +57,6 @@ class Sudoku:
         return True
 
     def solve_simple_back_tracking(self):
-        self.show_board()
-        print("---------------------------------------------------------------------")
         next_location = self.get_next_location()
         if next_location[0] is None:
             return True
