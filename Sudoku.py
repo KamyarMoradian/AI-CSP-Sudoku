@@ -1,12 +1,4 @@
-# TODO: create class sudoku. with following methods:
-# 	    *solveSimpleBackTracking -> to run backtracking on sudoku
-# 	    *getNextLocation -> to get next empty square
-#    	*isSafe(i, j, choice) -> to check if it doesn't violate constraints
-
-from random import choice
-
 class Sudoku:
-
     def __init__(self, dim, file_dir):
         self.board = []
         self.dim = dim
@@ -28,12 +20,45 @@ class Sudoku:
             print('')
 
     def get_next_location(self) -> (int, int):
-        pass
+        for i in range(self.dim):
+            for j in range(self.dim):
+                if self.board[i][j] == '0':
+                    return i, j
+        return None, None
 
-    def is_safe(self, i, j, candidate):
-        pass
+    def is_safe_row(self, row, candidate) -> bool:
+        for i in range(self.dim):
+            if self.board[row][i] == str(candidate):
+                return False
+        return True
+
+    def is_safe_column(self, col, candidate) -> bool:
+        for i in range(self.dim):
+            if self.board[i][col] == str(candidate):
+                return False
+        return True
+
+    def is_safe_region(self, row, col, candidate) -> bool:
+        row_region = row - row % 3
+        col_region = col - col % 3
+        for i in range(row_region, row_region + 3):
+            for j in range(col_region, col_region + 3):
+                if self.board[i][j] == str(candidate):
+                    return False
+        return True
+
+    def is_safe(self, row, col, candidate):
+        if not self.is_safe_row(row, candidate):
+            return False
+        if not self.is_safe_column(col, candidate):
+            return False
+        if not self.is_safe_region(row, col, candidate):
+            return False
+        return True
 
     def solve_simple_back_tracking(self):
+        self.show_board()
+        print("---------------------------------------------------------------------")
         next_location = self.get_next_location()
         if next_location[0] is None:
             return True
