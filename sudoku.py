@@ -1,4 +1,7 @@
-class Sudoku:
+from abc import ABC, abstractmethod
+
+
+class Sudoku(ABC):
     def __init__(self, dim, file_dir):
         self.board = []
         self.dim = dim
@@ -20,12 +23,9 @@ class Sudoku:
                     print(self.board[i][j], end='')
             print('')
 
+    @abstractmethod
     def get_next_location(self) -> (int, int):
-        for i in range(self.dim):
-            for j in range(self.dim):
-                if self.board[i][j] == '0':
-                    return i, j
-        return None, None
+        pass
 
     def is_safe_row(self, row, candidate) -> bool:
         for i in range(self.dim):

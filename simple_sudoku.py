@@ -1,8 +1,16 @@
 from sudoku import Sudoku
 
+
 class SimpleSudoku(Sudoku):
     def __init__(self, dim, file_dir):
         super().__init__(dim, file_dir)
+
+    def get_next_location(self) -> (int, int):
+        for i in range(self.dim):
+            for j in range(self.dim):
+                if self.board[i][j] == '0':
+                    return i, j
+        return None, None
 
     def solve_simple_back_tracking(self):
         next_location = self.get_next_location()
