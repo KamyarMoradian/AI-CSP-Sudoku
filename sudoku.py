@@ -10,11 +10,13 @@ class Sudoku(ABC):
         self.initialize_board(file_dir)
 
     def initialize_board(self, file_dir):
+        """ read file and import sudoku board """
         with open(file_dir) as fh:
             content = fh.readlines()
             self.board = [list(x.strip()) for x in content]
 
     def show_board(self):
+        """ print sudoku board in the console """
         for i in range(9):
             for j in range(9):
                 if j != 8:
@@ -22,10 +24,6 @@ class Sudoku(ABC):
                 else:
                     print(self.board[i][j], end='')
             print('')
-
-    @abstractmethod
-    def get_next_location(self) -> (int, int):
-        pass
 
     def is_safe_row(self, row, candidate) -> bool:
         for i in range(self.dim):
@@ -49,6 +47,7 @@ class Sudoku(ABC):
         return True
 
     def is_safe(self, row, col, candidate):
+        """ check if placing candidate in specified coordinate is safe or not """
         if not self.is_safe_row(row, candidate):
             return False
         if not self.is_safe_column(col, candidate):
@@ -58,6 +57,7 @@ class Sudoku(ABC):
         return True
 
     def get_domain(self, row, col):
+        """ method to get domain of available values of given coordinate """
         # 0. initialize array candidates and populate it with values in range 1 to dim (which is 9 in this scenario)
         candidates = [str(i) for i in range(1, self.dim + 1)]
         # 1. remove occurred values in row
@@ -82,6 +82,7 @@ class Sudoku(ABC):
         return candidates
 
     def get_remaining_values(self):
+        """ method to calculate domain of all squares of the board """
         new_rv = []
         for row in range(self.dim):
             for col in range(self.dim):
@@ -90,3 +91,11 @@ class Sudoku(ABC):
                 else:
                     new_rv.append(self.get_domain(row, col))
         return new_rv
+
+    @abstractmethod
+    def get_next_location(self) -> (int, int):
+        pass
+
+    @abstractmethod
+    def solve(self, mode):
+        pass
