@@ -1,5 +1,5 @@
 from simple_sudoku import SimpleSudoku
-from statistics import mean
+# from statistics import mean
 from improved_sudoku import ImprovedSudoku
 import time
 N = 10
@@ -29,7 +29,7 @@ if __name__ == '__main__':
     start_time = time.time()
     simple_sudoku_obj.solve(mode='LT')
     print("--- %s seconds ---" % (time.time() - start_time))
-    print("--- %s nodes expanded ---" % (simple_sudoku_obj.expanded_nodes))
+    print("--- %s nodes expanded ---" % simple_sudoku_obj.expanded_nodes)
     simple_sudoku_obj.show_board()
     # test(simple_sudoku_obj, mode='LT')
 
@@ -40,7 +40,7 @@ if __name__ == '__main__':
     start_time = time.time()
     simple_sudoku_obj.solve(mode='ET')
     print("--- %s seconds ---" % (time.time() - start_time))
-    print("--- %s nodes expanded ---" % (simple_sudoku_obj.expanded_nodes))
+    print("--- %s nodes expanded ---" % simple_sudoku_obj.expanded_nodes)
     simple_sudoku_obj.show_board()
     # test(simple_sudoku_obj, mode='ET')
 
@@ -51,7 +51,7 @@ if __name__ == '__main__':
     start_time = time.time()
     improved_sudoku_obj.solve(mode='AC')
     print("--- %s seconds ---" % (time.time() - start_time))
-    print("--- %s nodes expanded ---" % (improved_sudoku_obj.expanded_nodes))
+    print("--- %s nodes expanded ---" % improved_sudoku_obj.expanded_nodes)
     improved_sudoku_obj.show_board()
     # test(improved_sudoku_obj, mode='AC')
 
@@ -62,6 +62,6 @@ if __name__ == '__main__':
     start_time = time.time()
     improved_sudoku_obj.solve(mode='MRV')
     print("--- %s seconds ---" % (time.time() - start_time))
-    print("--- %s nodes expanded ---" % (improved_sudoku_obj.expanded_nodes))
+    print("--- %s nodes expanded ---" % improved_sudoku_obj.expanded_nodes)
     improved_sudoku_obj.show_board()
     # test(improved_sudoku_obj, mode='MRV')
